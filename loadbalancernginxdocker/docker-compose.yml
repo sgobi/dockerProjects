@@ -1,0 +1,20 @@
+services:
+  webapp01:
+    build: /dockerProject/dockerProjects/loadbalancernginxdocker/web-app01
+    container_name: web-app01
+  webapp02:
+    build: /dockerProject/dockerProjects/loadbalancernginxdocker/web-app02
+    container_name: web-app02
+  
+  nginx:
+    image: nginx:latest
+    # Specifies the name of the container. This name can be used to reference the container in other parts of the Docker Compose file or in Docker commands.
+    container_name: nginx
+    ports:
+      # Maps port 8080 on the host to port 80 in the container.
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - webapp01
+      - webapp02
